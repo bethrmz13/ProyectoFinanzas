@@ -18,7 +18,7 @@ namespace AuthService.Controllers
 
         public AuthController(IConfiguration config)
         {
-            _config = congfig //se inyecta la configuración de appsettings.json
+            _config = config; //se inyecta la configuración de appsettings.json
         }
 
         [HttpPost("login")]
