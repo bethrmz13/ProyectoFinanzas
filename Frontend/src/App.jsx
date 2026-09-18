@@ -1,122 +1,99 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const categoriaActivos={
+  "Equipo de Computo (3 años)": ["Laptop","Computadore de escritorio","Impresora","Servidor"],
+  "Muebles y Enseres (10 años)": ["Escritorio","Silla Ergonómica","Archivador","Mesa de reuniones"],
+  "Vehiculos (5 años)": ["Automovil","Camioneta","Motocicleta"],
+  "Bienes Inmuebles (20 años)": ["Edificios","Oficina","Bodega","Local Comercial"]
+};
+
+function App(){
+  const [activo, setActivo] = useState({
+    tipo: '',
+    detalle: '',
+    precio: '',
+    fechaIngreso: ''
+  });
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+
+    if (name=='tipo'){
+      setActivo({...activo, tipo: value, detalle: ''});
+    }else{
+      setActivo({...activo, [name]: value});
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const respuesta = await fetch('http://localhost:5249/api/activos/registrar',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(activo)
+      });
+
+      if (respuesta.ok){
+        alert("El activo se guardó en la base de datos");
+        setActivo({ tipo: '',detalle: '',precio: '', fechaIngreso: ''});
+      }else{
+        alert("Hubo un error al guardar el activo.");
+      }
+    }catch (error){
+      console.error("Error de conexión:", error);
+    }
+  };
+
+  const detallesDisponibles = activo.tipo ? categoriasActivos[activo.tipo]:[];
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div style={{padding:'40 px',fontFamily:'sans-serif',maxWidth:'400px',margin:'0 auto',color:'white'}}>
+      <h2>Registro de Activos</h2>
+
+      <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'15px'}}>
+
+        {/*combobox - tipo de activo*/}
+        <div style={{display:'flex',flexDirection:'column'}}>
+          <label>Categoría del Activo:</label>
+          <select name="tipo" value={activo.tipo} onChange={handleChange} required style={{padding:'8px',marginTop:'5px'}}>
+            <option value="">-- Selecciona una categoría --</option>
+            {Object.keys(categoriaActivos).map((cat) => (
+              <option key={cat} value={cat}></option>
+            ))}
+          </select>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+
+        {/*combobox - detalle*/}
+        <div style={{display:'flex',flexDirection: 'column'}}>
+          <label>Equipo Especifico:</label>
+          <select name="detalle" value={activo.detalle} onChange={handleChange} required disabled={!activo.tipo} style={{padding:'8px', marginTop}}>
+            <option value="">-- Selecciona un equipo --</option>
+            {detallesDisponibles.map((det) => (
+              <option key={det} value={det}>{det}</option>
+            ))}
+          </select>      
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+        
+        <div style={{display:'flex',flexDirection:'column'}}>
+          <label>Precio de Compre ($):</label>
+          <input type="number" name="precio" value={activo.precio} step="0.01" onChange={handleChange} required style={{padding:'8px', marginTop:'5px'}}></input>
+        </div>
+        
+        <div style={{display:'flex',flexDirection:'column'}}>
+          <label>Fecha de Compra / Adquisición</label>
+          <input type="date" name="fechaIngreso" value={activo.fechaIngreso} onChange={handleChange} required style={{padding:'8px', marginTop:'5px'}}></input>
+        </div>
+        
+        <button type="submit" style={{padding:'10px 15px', marginTop:'10px',backgroundColor:'#646cff',color:'white',border:'none',vorderRadius:'5px',cursor:'pointer',fontWeight:'bold'}}>
+          Registrar Activo
         </button>
-      </section>
+      </form>
+    </div>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    
+    
   )
 }
-
-export default App
+export default App;
