@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const categoriaActivos={
+const categoriasActivos={
   "Equipo de Computo (3 años)": ["Laptop","Computadore de escritorio","Impresora","Servidor"],
   "Muebles y Enseres (10 años)": ["Escritorio","Silla Ergonómica","Archivador","Mesa de reuniones"],
   "Vehiculos (5 años)": ["Automovil","Camioneta","Motocicleta"],
@@ -59,8 +59,8 @@ function App(){
           <label>Categoría del Activo:</label>
           <select name="tipo" value={activo.tipo} onChange={handleChange} required style={{padding:'8px',marginTop:'5px'}}>
             <option value="">-- Selecciona una categoría --</option>
-            {Object.keys(categoriaActivos).map((cat) => (
-              <option key={cat} value={cat}></option>
+            {Object.keys(categoriasActivos).map((cat) => (
+              <option key={cat} value={cat}>{cat}</option>
             ))}
           </select>
         </div>
@@ -68,7 +68,7 @@ function App(){
         {/*combobox - detalle*/}
         <div style={{display:'flex',flexDirection: 'column'}}>
           <label>Equipo Especifico:</label>
-          <select name="detalle" value={activo.detalle} onChange={handleChange} required disabled={!activo.tipo} style={{padding:'8px', marginTop}}>
+          <select name="detalle" value={activo.detalle} onChange={handleChange} required disabled={!activo.tipo} style={{padding:'8px', marginTop:'5px'}}>
             <option value="">-- Selecciona un equipo --</option>
             {detallesDisponibles.map((det) => (
               <option key={det} value={det}>{det}</option>
@@ -77,7 +77,7 @@ function App(){
         </div>
         
         <div style={{display:'flex',flexDirection:'column'}}>
-          <label>Precio de Compre ($):</label>
+          <label>Precio de Compra ($):</label>
           <input type="number" name="precio" value={activo.precio} step="0.01" onChange={handleChange} required style={{padding:'8px', marginTop:'5px'}}></input>
         </div>
         
@@ -86,13 +86,11 @@ function App(){
           <input type="date" name="fechaIngreso" value={activo.fechaIngreso} onChange={handleChange} required style={{padding:'8px', marginTop:'5px'}}></input>
         </div>
         
-        <button type="submit" style={{padding:'10px 15px', marginTop:'10px',backgroundColor:'#646cff',color:'white',border:'none',vorderRadius:'5px',cursor:'pointer',fontWeight:'bold'}}>
+        <button type="submit" style={{padding:'10px 15px', marginTop:'10px',backgroundColor:'#646cff',color:'white',border:'none',borderRadius:'5px',cursor:'pointer',fontWeight:'bold'}}>
           Registrar Activo
         </button>
       </form>
     </div>
-
-    
     
   )
 }
