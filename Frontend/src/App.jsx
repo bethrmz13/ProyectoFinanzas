@@ -12,7 +12,8 @@ function App(){
     tipo: '',
     detalle: '',
     precio: '',
-    fechaIngreso: ''
+    fechaIngreso: '',
+    fechaCorte: ''
   });
 
   const handleChange = (e) => {
@@ -78,7 +79,7 @@ function App(){
         
         <div style={{display:'flex',flexDirection:'column'}}>
           <label>Precio de Compra ($):</label>
-          <input type="number" name="precio" value={activo.precio} step="0.01" onChange={handleChange} required style={{padding:'8px', marginTop:'5px'}}></input>
+          <input type="number" name="precio" value={activo.precio} min="0" step="0.01" onChange={handleChange} required style={{padding:'8px', marginTop:'5px'}}></input>
         </div>
         
         <div style={{display:'flex',flexDirection:'column'}}>
@@ -86,6 +87,11 @@ function App(){
           <input type="date" name="fechaIngreso" value={activo.fechaIngreso} onChange={handleChange} required style={{padding:'8px', marginTop:'5px'}}></input>
         </div>
         
+        <div style={{display:'flex',flexDirection:'column'}}>
+          <label>Fecha de Corte</label>
+          <input type="date" name="fechaCorte" value={activo.fechaCorte} onChange={handleChange} required style={{padding:'8px', marginTop:'5xp'}}></input>
+        </div>
+
         <button type="submit" style={{padding:'10px 15px', marginTop:'10px',backgroundColor:'#646cff',color:'white',border:'none',borderRadius:'5px',cursor:'pointer',fontWeight:'bold'}}>
           Registrar Activo
         </button>
