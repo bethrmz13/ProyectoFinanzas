@@ -1,4 +1,4 @@
-namespace AuthService.DTOs
+namespace ActivosService.DTOs
 {
     public class RegistroActivoDto
     {

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Dapper;
-using AuthService.DTOs;
+using ActivosService.DTOs;
 
-namespace AuthService.Controllers
+namespace ActivosService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
