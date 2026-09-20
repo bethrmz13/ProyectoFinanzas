@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const categoriasActivos={
-  "Equipo de Computo (3 años)": ["Laptop","Computadore de escritorio","Impresora","Servidor"],
+  "Equipo de Computo (3 años)": ["Laptop","Computadora de escritorio","Impresora","Servidor"],
   "Muebles y Enseres (10 años)": ["Escritorio","Silla Ergonómica","Archivador","Mesa de reuniones"],
   "Vehiculos (5 años)": ["Automovil","Camioneta","Motocicleta"],
   "Bienes Inmuebles (20 años)": ["Edificios","Oficina","Bodega","Local Comercial"]
