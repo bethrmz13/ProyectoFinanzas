@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './Login';
 
 const categoriasActivos={
   "Equipo de Computo (3 años)": ["Laptop","Computadora de escritorio","Impresora","Servidor"],
@@ -7,7 +9,7 @@ const categoriasActivos={
   "Bienes Inmuebles (20 años)": ["Edificios","Oficina","Bodega","Local Comercial"]
 };
 
-function App(){
+function RegistroActivos(){
   const [activo, setActivo] = useState({
     tipo: '',
     detalle: '',
@@ -99,5 +101,16 @@ function App(){
     </div>
     
   )
+}
+
+function App(){
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login/>}/>
+        <Route path="/activos" element={<RegistroActivos/>}/>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 export default App;
