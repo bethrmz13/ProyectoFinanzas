@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [credenciales, setCredenciales] = useState({
-        usuario: '',
+        Email: '',
         password: ''
     });
 
@@ -13,12 +13,33 @@ function Login() {
         setCredenciales({ ...credenciales, [e.target.name]: e.target.value});
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Enviando credenciales al backend...", credenciales);
 
-        console.log("Intentando iniciar sesión con:", credenciales); //conexion backed mas adelante
-        alert("Login exitoso, redirigiendo el sistema... ");
-        navigate('/activos');
+        try{
+            const respuesta = await fetch('http://localhost:5249/api/auth/login',{
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(credenciales)
+            });
+
+            if(respuesta.ok){
+                const data = await respuesta.json();
+                console.log("Token recibido del backend", data.token);
+
+                localStorage.setItem('token', data.token);
+
+                alert("Login exitoso, redirigiendo el sistema...");
+                navigate('/activos');
+            }else{
+                alert("Email o contraseña incorrectos.");
+            }
+        }catch (error){
+            console.error("Error de conexión:", error);
+            alert("El servidor backend esta apagado o inaccesible");
+        }
+        
     };
 
     return(
@@ -27,8 +48,8 @@ function Login() {
 
             <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'15px'}}>
                 <div style={{display:'flex',flexDirection:'column'}}>
-                    <label>Usuario:</label>
-                    <input type="text" name="usuario" value={credenciales.usuario} onChange={handleChange} required style={{padding:'8px',marginTop:'5px',borderRadius:'4px',border:'1px solid #ccc'}}/>
+                    <label>Email:</label>
+                    <input type="text" name="Email" value={credenciales.Email} onChange={handleChange} required style={{padding:'8px',marginTop:'5px',borderRadius:'4px',border:'1px solid #ccc'}}/>
 
                 </div>
                  

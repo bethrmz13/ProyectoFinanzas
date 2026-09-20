@@ -32,7 +32,7 @@ function RegistroActivos(){
     e.preventDefault();
 
     try {
-      const respuesta = await fetch('http://localhost:5249/api/activos/registrar',{
+      const respuesta = await fetch('http://localhost:5250/api/activos/registrar',{
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(activo)
