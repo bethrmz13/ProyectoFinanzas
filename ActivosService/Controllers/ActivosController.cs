@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Dapper;
-using AuthService.DTOs;
+using ActivosService.DTOs;
 
-namespace AuthService.Controllers
+namespace ActivosService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,6 +20,11 @@ namespace AuthService.Controllers
         [HttpPost("registrar")]
         public IActionResult RegistrarActivo([FromBody] RegistroActivoDto activoDto)
         {
+            Console.WriteLine($"\n--- NUEVO ACTIVO AÑADIDO ---");
+            Console.WriteLine($"Tipo: {activoDto.Tipo}");
+            Console.WriteLine($"Fecha de Compra: {activoDto.FechaIngreso}");
+            Console.WriteLine($"Fecha de Corte: {activoDto.FechaCorte}\n");
+            
             using var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
 
             var sql = @"

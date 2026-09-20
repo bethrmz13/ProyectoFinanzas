@@ -1,4 +1,4 @@
-namespace AuthService.DTOs
+namespace ActivosService.DTOs
 {
     public class RegistroActivoDto
     {
@@ -6,5 +6,6 @@ namespace AuthService.DTOs
         public string Detalle { get; set;}
         public decimal Precio { get; set;}
         public DateTime FechaIngreso { get; set;}
+        public DateTime FechaCorte { get; set;}
     }
 }
