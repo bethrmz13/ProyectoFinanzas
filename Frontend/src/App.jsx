@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Login';
 
 function RegistroActivos(){
+  const [categoriasDB, setCategoriasDB] = useState([]);
+  useEffect(() => {
+      const cargarCategorias = async () => {
+          try {
+              const respuesta = await fetch('http://localhost:5250/api/activos/categorias');
+              if (respuesta.ok) {
+                  const data = await respuesta.json();
+                  setCategoriasDB(data); // Guardamos la lista que nos manda C#
+              }
+          } catch (error) {
+              console.error("Error al cargar las categorías:", error);
+          }
+      };
+      cargarCategorias();
+  }, []);
+  
   const [activo, setActivo] = useState({
     tipo: '',
     detalle: '',
@@ -12,6 +28,9 @@ function RegistroActivos(){
 
   const handleChange = (e) => {
     const {name, value} = e.target;
+    if (name === 'precio' && value < 0) {
+        return; 
+    }
 
     if (name=='tipo'){
       setActivo({...activo, tipo: value, detalle: ''});
@@ -53,10 +72,11 @@ function RegistroActivos(){
           <label>Categoría del Activo:</label>
           <select name="categoria" value={activo.categoria} onChange={handleChange} required style={{padding:'8px',marginTop:'5px',borderRadius:'4px',border:'1px solid #ccc',backgroundColor:'#333',color:'white'}}>
               <option value="">Seleccione una categoría...</option>
-              <option value="EQUIPOS INFORMATICOS">Equipos Informáticos</option>
-              <option value="VEHICULOS">Vehículos</option>
-              <option value="EDIFICIOS">Edificios</option>
-              <option value="MUEBLES">Muebles</option>
+              
+              {categoriasDB.map((cat, index) => (
+                  <option key={index} value={cat}>{cat}</option>
+              ))}
+              
           </select>
       </div>
 

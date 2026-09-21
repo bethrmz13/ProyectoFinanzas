@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using ActivosService.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ActivosService.Controllers
 {
@@ -39,6 +40,18 @@ namespace ActivosService.Controllers
             } 
 
             return BadRequest(new {mensaje = "Hubo un error al guardar el activo."});
+        }
+
+        [HttpGet("categorias")]
+        [AllowAnonymous] 
+        public IActionResult ObtenerCategorias()
+        {
+            using var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection"));
+            var sql = "SELECT Nombre FROM dbo.TiposActivos";
+            
+            var categorias = connection.Query<string>(sql).ToList();
+            
+            return Ok(categorias);
         }
 
     }
