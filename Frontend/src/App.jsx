@@ -4,7 +4,7 @@ import Login from './Login';
 
 const categoriasActivos={
   "Equipo de Computo (3 años)": ["Laptop","Computadora de escritorio","Impresora","Servidor"],
-  "Muebles y Enseres (10 años)": ["Escritorio","Silla Ergonómica","Archivador","Mesa de reuniones"],
+  "Muebles y Enseres (3 años)": ["Escritorio","Silla Ergonómica","Archivador","Mesa de reuniones"],
   "Vehiculos (5 años)": ["Automovil","Camioneta","Motocicleta"],
   "Bienes Inmuebles (20 años)": ["Edificios","Oficina","Bodega","Local Comercial"]
 };
@@ -14,8 +14,7 @@ function RegistroActivos(){
     tipo: '',
     detalle: '',
     precio: '',
-    fechaIngreso: '',
-    fechaCorte: ''
+    fechaIngreso: ''
   });
 
   const handleChange = (e) => {
@@ -68,16 +67,11 @@ function RegistroActivos(){
           </select>
         </div>
 
-        {/*combobox - detalle*/}
-        <div style={{display:'flex',flexDirection: 'column'}}>
-          <label>Equipo Especifico:</label>
-          <select name="detalle" value={activo.detalle} onChange={handleChange} required disabled={!activo.tipo} style={{padding:'8px', marginTop:'5px'}}>
-            <option value="">-- Selecciona un equipo --</option>
-            {detallesDisponibles.map((det) => (
-              <option key={det} value={det}>{det}</option>
-            ))}
-          </select>      
+        <div style={{display:'flex',flexDirection:'column'}}>
+          <label>Producto:</label>
+          <input type="text" name="producto" value={activo.producto} onChange={handleChange} required style={{padding:'8px',marginTop:'5px',borderRadius:'4px',border:'1px solid #ccc',backgroundColor:'#333',color:'white'}}/>
         </div>
+        
         
         <div style={{display:'flex',flexDirection:'column'}}>
           <label>Precio de Compra ($):</label>
@@ -87,11 +81,6 @@ function RegistroActivos(){
         <div style={{display:'flex',flexDirection:'column'}}>
           <label>Fecha de Compra / Adquisición</label>
           <input type="date" name="fechaIngreso" value={activo.fechaIngreso} onChange={handleChange} required style={{padding:'8px', marginTop:'5px'}}></input>
-        </div>
-        
-        <div style={{display:'flex',flexDirection:'column'}}>
-          <label>Fecha de Corte</label>
-          <input type="date" name="fechaCorte" value={activo.fechaCorte} onChange={handleChange} required style={{padding:'8px', marginTop:'5xp'}}></input>
         </div>
 
         <button type="submit" style={{padding:'10px 15px', marginTop:'10px',backgroundColor:'#646cff',color:'white',border:'none',borderRadius:'5px',cursor:'pointer',fontWeight:'bold'}}>
