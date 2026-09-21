@@ -2,8 +2,8 @@ namespace ActivosService.DTOs
 {
     public class RegistroActivoDto
     {
-        public string Tipo { get; set;}
-        public string Detalle { get; set;}
+        public required string Tipo { get; set;}
+        public required string Detalle { get; set;}
         public decimal Precio { get; set;}
         public DateTime FechaIngreso { get; set;}
 
