@@ -2,13 +2,6 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Login';
 
-const categoriasActivos={
-  "Equipo de Computo (3 años)": ["Laptop","Computadora de escritorio","Impresora","Servidor"],
-  "Muebles y Enseres (3 años)": ["Escritorio","Silla Ergonómica","Archivador","Mesa de reuniones"],
-  "Vehiculos (5 años)": ["Automovil","Camioneta","Motocicleta"],
-  "Bienes Inmuebles (20 años)": ["Edificios","Oficina","Bodega","Local Comercial"]
-};
-
 function RegistroActivos(){
   const [activo, setActivo] = useState({
     tipo: '',
@@ -56,16 +49,16 @@ function RegistroActivos(){
 
       <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'15px'}}>
 
-        {/*combobox - tipo de activo*/}
         <div style={{display:'flex',flexDirection:'column'}}>
           <label>Categoría del Activo:</label>
-          <select name="tipo" value={activo.tipo} onChange={handleChange} required style={{padding:'8px',marginTop:'5px'}}>
-            <option value="">-- Selecciona una categoría --</option>
-            {Object.keys(categoriasActivos).map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
+          <select name="categoria" value={activo.categoria} onChange={handleChange} required style={{padding:'8px',marginTop:'5px',borderRadius:'4px',border:'1px solid #ccc',backgroundColor:'#333',color:'white'}}>
+              <option value="">Seleccione una categoría...</option>
+              <option value="EQUIPOS INFORMATICOS">Equipos Informáticos</option>
+              <option value="VEHICULOS">Vehículos</option>
+              <option value="EDIFICIOS">Edificios</option>
+              <option value="MUEBLES">Muebles</option>
           </select>
-        </div>
+      </div>
 
         <div style={{display:'flex',flexDirection:'column'}}>
           <label>Producto:</label>
